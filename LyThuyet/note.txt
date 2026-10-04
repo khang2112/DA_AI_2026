@@ -1,0 +1,59 @@
+Thuật toán KNN
+Là thuật toán học lười, giữa nguyên tập train, có giám sát
+là thuật toán dự đoán nhãn của một mẫu dựa trên nhãn các mẫu đã biết, các K láng giềng gần với mẫu đó
+K trong đó là số làng giềng gần nhất được lấy ra để vote cho nhãn chưa biết
+Nhãn được dự đoán ra là nhãn xuất hiện nhiều nhất trong các láng giềng 
+K thường được chọn là một số lẻ để tránh sự bỏ phiếu hòa 
+Trong KNN nếu K=1 dễ theo điểm nhiễu.
+Công thức euclid bằng căn bậc hai tổng bình phương các thuộc tính hiệu giữa các thành phần
+d(a,b) = \sqrt{\sum{i=1}^{n} (a_i - b_i)^2}
+cần gán nhãn cột y để so với tập điểm láng giềng
+
+Thuật toán K-means
+- là thuật toán học máy không giám sát, dùng để phân cụm dữ liệu
+- sẽ gán nhãn bộ dữ liệu chưa được phân cụm thành các cụm có sự giống nhau
+Các bước hoạt động của K-means
+1. Người dùng chon k cụm cần chia. Thuật toán chọn K điểm ngẫu nhiên làm tâm k cụm đầu (centroids)
+2. Tính khoảng cách ( thường dùng euclid) từ mọi điểm đến k tâm cụm. Mỗi điểm đó được gán về cụm mà nó gần 
+3. Sau khi gom xong, thuật toán tính tâm cụm mới bằng trung bình cộng tọa độ các điểm trong cụm 
+4. Lặp lại bước 2, 3 đến khi tâm cụm không còn di chuyển 
+
+=> Các điểm cần lưu ý:
+- Thuật toán yêu cầu chọn k trước
+- Do k tâm đầu tiên chọn ngẫy nhiên nên dữ liệu có thể bị nghiên về 1 phía.
+- Phù hợp với các cụm tròn hoặc cầu.
+
+=> Ứng dụng trong phân khúc khách hàng, phát hiện bất thường( dữ liệu xa tâm)
+- do là học không giám sát nên không dùng cột nhãn lớp khi fit, thường chỉ dùng cột nhãn sau khi đã phân cụm xong.
+ 
+-- ĐỒ THỊ ELBOW (PHƯƠNG PHÁP KHỦY TAY)
+- nhìn vào điểm khủy tay để chọn số lượng cụm K
+cấu trúc đồ thị:
+trục X -> số lượng cụm K
+trục Y -> thể hiện độ đo Inertia ( tổng bình phương khoảng cách từ các điểm dữ liệu đến tâm cụm gần nhấ
+là kmeans.inertia_)
+dùng inertia để chọn K, ban đầu không hợp thì inertia giảm nhanh đến K xác định thì gập lại và giảm chậm
+----
+DBSCAN là thuật toán học không giám sát, phân cụm dự vào mật độ 
+có 2 tham số phải chọn
+eps(bán kính vùng lân cận quanh 1 điểm, xác định khoảng cách tối đa đưa ra "láng giềng)
+min_samples: số lượng điểm tối thiểu trong bán kính eps, để 1 điểm được công nhận là lõi.
+
+Cách phân loại điểm dữ liệu
+điểm lõi: là điểm có số lượng láng giềng nằm trong bán kính eps lớn hơn hoặc bằng min_samples
+điểm biên: điểm không đủ dk làm lõi nhưng nằm lân cận lõi.
+Nhiễu: điểm mồ oi, không thuộc lõi và biên -1
+
+Ưu điểm so vs k-Means
+- Không cần chọn trước K
+- Nhiều hình dạng
+- Tự bỏ nhiễu.
+
+Nếu eps quá nhỏ thì dữ liệu có thể có nhiều -1 ( qá nhỏ không tìm được lõi) dữ liệu lớn bị xé vụn 
+Mất đi khả năng phân cụm dữ liệu
+
+So sánh 
+KNN cần Y
+Kmeans cần chọn K
+DBSCAN không cần chọn K
+Khi tính khoảng cách các cột dữ liệu quá khác biệt đơn vị thì cần chuẩn hóa về cùng thang
